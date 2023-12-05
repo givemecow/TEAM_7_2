@@ -31,7 +31,6 @@ public class User {
     private String birth;
     private String gender;
     private String dateOfIssue;     //유저가 회원가입했을때의 시점으로
-    private Boolean modalActive;
 
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -43,12 +42,11 @@ public class User {
     }
 
     public void updateUserInfo(String profileUrl, String nickname,
-            String birth, String gender, Boolean modalActive){
+            String birth, String gender){
         this.profileUrl = profileUrl;
         this.nickname = nickname;
         this.birth = birth;
         this.gender = gender;
-        this.modalActive = modalActive;
     }
 
     public void updateEvent(Event event) {

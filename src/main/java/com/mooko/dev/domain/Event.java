@@ -28,17 +28,13 @@ public class Event {
     private String startDate;
     private String endDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "barcode_id")
-    private Barcode barcode;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "event", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<EventPhoto> eventPhoto = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id")
+    private List<EventPhoto> eventPhotos = new ArrayList<>();
 
     private LocalDateTime createdAt;
 
@@ -51,12 +47,8 @@ public class Event {
         this.endDate = endDate;
     }
 
-    public void updateBarcode(Barcode barcode) {
-        this.barcode = barcode;
-    }
-
     public void updateEventPhoto(List<EventPhoto> eventPhotos) {
-        this.eventPhoto = eventPhotos;
+        this.eventPhotos = eventPhotos;
     }
 
 }

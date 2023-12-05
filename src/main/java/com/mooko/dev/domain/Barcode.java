@@ -31,8 +31,11 @@ public class Barcode {
     @Enumerated(EnumType.STRING)
     private BarcodeType type;
 
-    @OneToOne(mappedBy = "barcode", fetch = FetchType.LAZY)
-    private Event event;
+    private boolean loading;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private LocalDateTime createdAt;
 

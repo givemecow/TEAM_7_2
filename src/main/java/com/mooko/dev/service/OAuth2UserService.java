@@ -2,7 +2,6 @@ package com.mooko.dev.service;
 import com.mooko.dev.domain.User;
 import com.mooko.dev.oauth.CustomOAuth2user;
 import com.mooko.dev.oauth.KakaoUserInfo;
-import com.mooko.dev.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -20,9 +19,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OAuth2UserService extends DefaultOAuth2UserService {
 
-
-    private final UserService userService;
-    private final UserRepository userRepository;
 
     @Value("${cloud.aws.s3.default-img}")
     private String USER_DEFAULT_PROFILE_IMAGE;
@@ -47,21 +43,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
 
     private void checkUser(KakaoUserInfo kakaoUserInfo) {
 
-        Optional<User> bySocialId = userRepository.findBySocialId(kakaoUserInfo.getId());
-        if (bySocialId.isPresent()) {
-            return;
-        }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = LocalDateTime.now().format(formatter);
-
-        User user = User.builder()
-                .socialId(kakaoUserInfo.getId())
-                .createdAt(LocalDateTime.now())
-                .dateOfIssue(formattedDate)
-                .profileUrl(USER_DEFAULT_PROFILE_IMAGE)
-                .modalActive(true)
-                .build();
 
         /**
          * nickname
@@ -71,7 +52,6 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
          *
          * refreshToken은 로그인 성공하고나서 입력받기
          */
-        userService.save(user);
     }
 }
 

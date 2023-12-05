@@ -5,7 +5,6 @@ import com.mooko.dev.domain.PrincipalDetails;
 import com.mooko.dev.domain.User;
 
 import com.mooko.dev.oauth.CustomOAuth2user;
-import com.mooko.dev.repository.UserRepository;
 import com.mooko.dev.security.JwtUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
